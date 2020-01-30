@@ -1,5 +1,8 @@
 package javaLearningsRegEx;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegularExpressionExamples {
 
 	public static void main(String[] args) {
@@ -40,6 +43,16 @@ public class RegularExpressionExamples {
 		System.out.println(st.replaceAll("newa{5,7}", "_"));	//None changed as checks for character a repeated min 5 times
 		System.out.println(st.replaceAll("t+f*!", "_"));
 		System.out.println(st.replaceAll("t+f*!+", "_"));
+		
+		//Pattern Matchers
+		StringBuilder html = new StringBuilder("<h2> class=\"qodef-st-title\"><span class=\"qodef-st-title-bold\">Welcome</span> to&nbsp;Sree Travels\r\n" + 
+				"<br>Explore&nbsp;<span class=\"qodef-st-title-bold\">our</span>&nbsp;\r\n" + 
+				"<span class=\"qodef-st-title-bold\">must visit</span><br>\r\n" + 
+				"<span class=\"qodef-st-title-bold\">destinations</span></h2>");
+		String pat = "<h2>.*";
+		Pattern patMat = Pattern.compile(pat);
+		Matcher mt = patMat.matcher(html);
+		System.out.println(mt.matches());
 	}
 
 }
