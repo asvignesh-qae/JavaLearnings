@@ -45,14 +45,56 @@ public class RegularExpressionExamples {
 		System.out.println(st.replaceAll("t+f*!+", "_"));
 		
 		//Pattern Matchers
-		StringBuilder html = new StringBuilder("<h2> class=\"qodef-st-title\"><span class=\"qodef-st-title-bold\">Welcome</span> to&nbsp;Sree Travels\r\n" + 
-				"<br>Explore&nbsp;<span class=\"qodef-st-title-bold\">our</span>&nbsp;\r\n" + 
-				"<span class=\"qodef-st-title-bold\">must visit</span><br>\r\n" + 
-				"<span class=\"qodef-st-title-bold\">destinations</span></h2>");
-		String pat = "<h2>.*";
+		String html1 = "<h2> Practice regular expressions </h2>";
+		html1= html1+"<P> This is first paragraph </p>";
+		html1= html1+"<P> This is Second paragraph </p>";
+		html1= html1+"<b> This is bold text </b>";
+		html1= html1+"<h2> This is Second heading </h2>";
+		//System.out.println("html1 is "+html1);
+		String pat = ".*<h2>.*";
 		Pattern patMat = Pattern.compile(pat);
-		Matcher mt = patMat.matcher(html);
+		Matcher mt = patMat.matcher(html1);
 		System.out.println(mt.matches());
+		int count =0;
+		String patGrp = "<h2>";
+		Pattern p = Pattern.compile(patGrp);
+		Matcher m = p.matcher(html1);
+		while(m.find()) {
+			count++;
+			System.out.println("Occourance: "+count+ " Start index is "+m.start()+" end index is "+m.end());
+			System.out.println(html1.substring(m.start(), m.end()));
+		}
+		
+		//Groups
+		String ptGrp1 = "(<h2>)";
+		Pattern pt = Pattern.compile(ptGrp1);
+		Matcher mr = pt.matcher(html1);
+		while(mr.find()) {
+			System.out.println("Group h2 is "+mr.group(1));	
+		}
+		
+		String ptGrp2 = "(<h2>.*</h2>)";
+		Pattern pt1 = Pattern.compile(ptGrp2);
+		Matcher mr1 = pt1.matcher(html1);
+		while(mr1.find()) {
+			System.out.println("Group 1 example is "+mr1.group(1)); 	//Returns html1 as * is greedy quantifiers
+		}
+		
+		String ptGrp3 = "(<h2>.*?</h2>)";
+		Pattern pt2 = Pattern.compile(ptGrp3);
+		Matcher mr2 = pt2.matcher(html1);
+		while(mr2.find()) {
+			System.out.println("Group 2 example is "+mr2.group(1)); 	//Returns h2 tags as ? is lazy quantifiers
+		}
+		
+		String ptGrp4 = "(<h2>)(.*?)(</h2>)";
+		Pattern pt3 = Pattern.compile(ptGrp4);
+		Matcher mr3 = pt3.matcher(html1);
+		while(mr3.find()) {
+			System.out.println("Group 1 is "+mr3.group(1));
+			System.out.println("Group 2 is "+mr3.group(2));		//Returns the string between h2 open and close tags as ? is lazy quantifier
+			System.out.println("Group 3 is "+mr3.group(3));
+		}
 	}
 
 }
